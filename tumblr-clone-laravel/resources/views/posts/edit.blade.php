@@ -26,6 +26,15 @@
             <input type="file" name="media" id="media" accept="image/*">
         </div>
 
+        <label for="tags">Tag-uri (separate prin virgulă)</label>
+        <input type="text" name="tags" id="tags" value="{{ $postTags ?? '' }}">
+
+        <label for="status">Status</label>
+        <select name="status" id="status">
+            <option value="published" @if($post->status === 'published') selected @endif>Publică</option>
+            <option value="draft" @if($post->status === 'draft') selected @endif>Ciornă</option>
+        </select>
+
         <button type="submit" class="btn btn-primary btn-block">Salvează</button>
     </form>
 </div>

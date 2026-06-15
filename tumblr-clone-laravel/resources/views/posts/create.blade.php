@@ -26,7 +26,18 @@
             <input type="file" name="media" id="media" accept="image/*">
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block">Publică</button>
+        <label for="tags">Tag-uri (separate prin virgulă)</label>
+        <input type="text" name="tags" id="tags" value="{{ old('tags') }}" placeholder="ex: muzică, artă, coding">
+
+        <label for="status">Status</label>
+        <select name="status" id="status">
+            <option value="published">Publică</option>
+            <option value="draft">Ciornă</option>
+        </select>
+
+        <div style="display:flex;gap:12px;margin-top:24px;">
+            <button type="submit" class="btn btn-primary btn-block">Publică</button>
+        </div>
     </form>
 </div>
 @endsection

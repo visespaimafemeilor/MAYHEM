@@ -54,4 +54,41 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    /* Color picker: highlight selected */
+    document.querySelectorAll('.color-option input').forEach(function (input) {
+        input.addEventListener('change', function () {
+            document.querySelectorAll('.color-option span').forEach(function (s) {
+                s.style.borderColor = 'transparent';
+            });
+            if (this.checked) {
+                this.nextElementSibling.style.borderColor = '#fff';
+            }
+        });
+    });
+
+    /* Notification badge polling */
+    var badge = document.getElementById('notif-badge');
+    if (badge) {
+        function updateBadge() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', BASE_URL + '/notifications/count', true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    try {
+                        var res = JSON.parse(xhr.responseText);
+                        if (res.count > 0) {
+                            badge.textContent = res.count;
+                            badge.style.display = 'inline-flex';
+                        } else {
+                            badge.style.display = 'none';
+                        }
+                    } catch (err) {}
+                }
+            };
+            xhr.send();
+        }
+        updateBadge();
+        setInterval(updateBadge, 15000);
+    }
+
 });

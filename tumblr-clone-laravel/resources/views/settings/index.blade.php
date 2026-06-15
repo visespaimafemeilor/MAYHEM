@@ -24,6 +24,40 @@
     </section>
 
     <section class="settings-section">
+        <h2>Culoare de accent</h2>
+        <form method="POST" action="{{ route('settings') }}">
+            @csrf
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;">
+                @php
+                    $colors = [
+                        ''         => 'Implicit',
+                        '#8a6cf5'  => 'Violet',
+                        '#00ff41'  => 'Terminal',
+                        '#00bcd4'  => 'Cyan',
+                        '#ff5722'  => 'Portocaliu',
+                        '#e91e63'  => 'Roz',
+                        '#4caf50'  => 'Verde',
+                        '#ffeb3b'  => 'Galben',
+                    ];
+                @endphp
+                @foreach ($colors as $val => $label)
+                    <label class="color-option" style="display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;">
+                        <input type="radio" name="accent_color" value="{{ $val }}"
+                               @if($user->accent_color === $val) checked @endif
+                               style="display:none;">
+                        <span style="display:inline-block;width:32px;height:32px;border-radius:50%;
+                                     background:{{ $val ?: 'var(--accent)' }};
+                                     border:3px solid {{ $user->accent_color === $val ? '#fff' : 'transparent' }};
+                                     transition:border 0.2s;"></span>
+                        <small style="font-size:0.7rem;color:var(--text-muted);">{{ $label }}</small>
+                    </label>
+                @endforeach
+            </div>
+            <button type="submit" class="btn btn-primary">Salvează culoarea</button>
+        </form>
+    </section>
+
+    <section class="settings-section">
         <h2>Schimbă parola</h2>
         <form method="POST" action="{{ route('settings.password') }}">
             @csrf

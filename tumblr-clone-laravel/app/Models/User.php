@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 class User extends Authenticatable
 {
     protected $fillable = [
-        'username', 'email', 'password', 'avatar', 'bio',
+        'username', 'email', 'password', 'avatar', 'bio', 'accent_color',
     ];
 
     protected $hidden = [

@@ -12,10 +12,16 @@ class SettingsController extends Controller
     {
         $user = auth()->user();
 
-        if ($request->isMethod('post') && $request->has('bio')) {
-            $request->validate(['bio' => 'nullable|string|max:500']);
+        if ($request->isMethod('post')) {
+            if ($request->has('bio')) {
+                $request->validate(['bio' => 'nullable|string|max:500']);
+                $user->update(['bio' => $request->bio]);
+            }
 
-            $user->update(['bio' => $request->bio]);
+            if ($request->has('accent_color')) {
+                $request->validate(['accent_color' => 'nullable|string|max:20']);
+                $user->update(['accent_color' => $request->accent_color ?: null]);
+            }
 
             return redirect()->route('settings');
         }

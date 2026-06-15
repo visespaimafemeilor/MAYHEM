@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Tumbleweed</title>
+    <title>@yield('title', 'MAYHEM')</title>
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     @stack('head')
 </head>
@@ -29,6 +29,10 @@
     </main>
 
     @include('components.footer')
+
+    @auth
+        @include('components.reblog-modal')
+    @endauth
 
     <script>var BASE_URL = '{{ url('/') }}';</script>
     <script src="{{ asset('assets/js/main.js') }}"></script>

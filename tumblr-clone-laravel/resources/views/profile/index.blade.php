@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+@push('head')
+@if($profileUser->accent_color)
+<style>
+    body { --accent: {{ $profileUser->accent_color }}; --accent-hover: {{ $profileUser->accent_color }}cc; }
+    .post-card-tags a { color: var(--accent) !important; background: color-mix(in srgb, var(--accent) 10%, transparent) !important; }
+    .pagination .active span { background: var(--accent) !important; border-color: var(--accent) !important; }
+</style>
+@endif
+@endpush
+
 @section('content')
 <div class="profile">
     <div class="profile-header">
