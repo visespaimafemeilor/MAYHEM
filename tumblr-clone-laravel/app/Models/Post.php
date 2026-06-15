@@ -25,8 +25,12 @@ class Post extends Model
         return $this->likes()->where('user_id', auth()->id())->exists();
     }
 
-    public function scopeFeedForUser($query, int $userId)
+    public function scopeFeedForUser($query, ?int $userId)
     {
+        if ($userId === null) {
+            return $query->withCount('likes')->with('user')->latest();
+        }
+
         return $query->whereIn('user_id', function ($q) use ($userId) {
                 $q->select('followed_id')
                   ->from('follows')

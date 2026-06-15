@@ -1,4 +1,4 @@
-FROM php:8.2-fpm
+FROM php:8.4-fpm
 
 RUN apt-get update && apt-get install -y \
     git unzip curl libpng-dev libonig-dev libxml2-dev \
@@ -11,6 +11,7 @@ WORKDIR /var/www
 COPY . .
 
 RUN composer install --no-interaction --optimize-autoloader --no-dev \
+    && mkdir -p public/storage \
     && chown -R www-data:www-data storage bootstrap/cache public/storage
 
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh

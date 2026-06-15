@@ -1,11 +1,13 @@
 .git
 .gitignore
-docker
+docker/*
+!docker/entrypoint.sh
 docker-compose.yml
 .env
 vendor
 node_modules
 storage/logs/*
 storage/framework/cache/data/*
+public/storage
 !storage/framework/cache/data/.gitkeep
 !storage/logs/.gitkeep
