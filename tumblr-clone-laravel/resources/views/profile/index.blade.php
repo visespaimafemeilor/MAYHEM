@@ -1,0 +1,38 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="profile">
+    <div class="profile-header">
+        <img src="{{ $profileUser->avatar }}"
+             alt="avatar" class="avatar avatar--lg">
+        <h1>{{ $profileUser->username }}</h1>
+
+        @if ($profileUser->bio)
+            <p class="profile-bio">{{ nl2br(e($profileUser->bio)) }}</p>
+        @endif
+
+        <p class="profile-meta">
+            Membru din {{ $profileUser->created_at->format('F Y') }}
+        </p>
+
+        @auth
+            @if (Auth::user()->id !== $profileUser->id)
+                <button class="btn btn-follow @if ($isFollowing) following @endif"
+                        data-user-id="{{ $profileUser->id }}">
+                    {{ $isFollowing ? 'Urmărești' : 'Urmărește' }}
+                </button>
+            @endif
+        @endauth
+    </div>
+
+    <div class="profile-posts">
+        @forelse ($posts as $post)
+            @include('components.post-card', ['post' => $post])
+        @empty
+            <div class="empty-state">
+                <p>Acest utilizator nu a postat încă nimic.</p>
+            </div>
+        @endforelse
+    </div>
+</div>
+@endsection
