@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AIController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationController;
@@ -36,6 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/settings/password', [SettingsController::class, 'updatePassword'])->name('settings.password');
 
     Route::post('/like', [PostController::class, 'like'])->name('like');
+
+    Route::post('/ai/generate', [AIController::class, 'generate'])->name('ai.generate');
 
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
     Route::post('/notifications/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');

@@ -66,6 +66,44 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    /* Ghostwriter AI: generate post content */
+    var aiBtn = document.getElementById('btn-ai-generate');
+    if (aiBtn) {
+        aiBtn.addEventListener('click', function () {
+            var idea = document.getElementById('ai-idea').value.trim();
+            if (!idea) return;
+
+            var type = document.getElementById('type').value;
+            var loading = document.getElementById('ai-loading');
+            var titleInput = document.getElementById('title');
+            var bodyInput = document.getElementById('body');
+
+            loading.style.display = 'inline';
+            aiBtn.disabled = true;
+
+            fetch(BASE_URL + '/ai/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                },
+                body: JSON.stringify({ idea: idea, type: type }),
+            })
+            .then(function (res) { return res.json(); })
+            .then(function (data) {
+                if (data.title) titleInput.value = data.title;
+                if (data.body) bodyInput.value = data.body;
+            })
+            .catch(function () {
+                alert('Eroare la generarea conținutului AI.');
+            })
+            .finally(function () {
+                loading.style.display = 'none';
+                aiBtn.disabled = false;
+            });
+        });
+    }
+
     /* Notification badge polling */
     var badge = document.getElementById('notif-badge');
     if (badge) {

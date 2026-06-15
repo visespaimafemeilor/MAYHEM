@@ -39,6 +39,21 @@
             <button type="submit" class="btn btn-primary btn-block">Publică</button>
         </div>
     </form>
+
+    <hr style="margin:32px 0;border-color:var(--border);">
+
+    <div style="background:var(--surface);padding:20px;border-radius:12px;">
+        <h3>🤖 Ghostwriter AI</h3>
+        <p style="font-size:0.9rem;color:var(--muted);margin-bottom:12px;">
+            Scrie o idee scurtă și lasă AI-ul să genereze o postare pentru tine.
+        </p>
+        <input type="text" id="ai-idea" placeholder="ex: filozofie de duminică, gânduri despre cod..."
+               maxlength="500" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);margin-bottom:12px;">
+        <div style="display:flex;gap:8px;align-items:center;">
+            <button id="btn-ai-generate" class="btn btn-secondary" style="padding:10px 20px;">Generează cu AI</button>
+            <span id="ai-loading" style="display:none;">Se generează...</span>
+        </div>
+    </div>
 </div>
 @endsection
 
