@@ -208,20 +208,12 @@ main {
 
 .empty-state a { font-weight: 700; }
 
-/* ===== BEAUTIFUL CHAOS GRID ===== */
+/* ===== BEAUTIFUL GRID ===== */
 .feed {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-    align-items: start;
-}
-
-.feed > :nth-child(3n) {
-    grid-column: 1 / -1;
-}
-
-.feed > :nth-child(5n+4) {
-    grid-column: span 2;
+    align-items: stretch;
 }
 
 .feed > :nth-child(odd) {
@@ -242,15 +234,10 @@ main {
 
 @media (min-width: 900px) {
     .feed { grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
-    .feed > :nth-child(5n+1) { grid-column: span 2; }
-    .feed > :nth-child(3n) { grid-column: 1 / -1; }
 }
 
 @media (min-width: 1300px) {
     .feed { grid-template-columns: 1fr 1fr 1fr 1fr; gap: 28px; }
-    .feed > :nth-child(4n+1) { grid-column: span 2; }
-    .feed > :nth-child(7n+3) { grid-column: span 2; }
-    .feed > :nth-child(3n) { grid-column: 1 / -1; }
 }
 
 /* ===== POST CARDS - CYBER SCRAPBOOK ===== */
@@ -262,7 +249,8 @@ main {
     box-shadow: 4px 4px 0px rgba(201, 54, 54, 0.25);
     transition: all 0.2s ease;
     position: relative;
-    break-inside: avoid;
+    display: flex;
+    flex-direction: column;
 }
 
 .post-card::before {
@@ -509,6 +497,16 @@ main {
 
 .avatar--sm { width: 28px; height: 28px; }
 .avatar--lg { width: 80px; height: 80px; margin-bottom: 12px; }
+
+.post-card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-card-content > :last-child {
+    margin-top: auto;
+}
 
 .post-card-media {
     margin-bottom: 14px;
@@ -850,7 +848,7 @@ main {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-    align-items: start;
+    align-items: stretch;
 }
 
 @media (min-width: 900px) {
@@ -1393,24 +1391,9 @@ main {
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 899px) {
-    .feed > :nth-child(3n),
-    .feed > :nth-child(5n+4) {
-        grid-column: 1;
-    }
-}
-
 @media (max-width: 700px) {
     .feed {
         grid-template-columns: 1fr;
-    }
-
-    .feed > :nth-child(3n),
-    .feed > :nth-child(5n+4),
-    .feed > :nth-child(5n+1),
-    .feed > :nth-child(4n+1),
-    .feed > :nth-child(7n+3) {
-        grid-column: 1;
     }
 
     .feed > :nth-child(odd),
@@ -1443,14 +1426,4 @@ main {
     .page-title { font-size: 1.4rem; }
     .filter-bar { gap: 2px; }
     .filter-btn { font-size: 0.55rem; padding: 3px 8px; }
-}
-
-@media (min-width: 901px) and (max-width: 1299px) {
-    .feed > :nth-child(3n) { grid-column: 1 / -1; }
-    .feed > :nth-child(5n+4) { grid-column: span 2; }
-}
-
-@media (min-width: 1300px) {
-    .feed > :nth-child(3n) { grid-column: 1 / -1; }
-    .feed > :nth-child(5n+4) { grid-column: span 2; }
 }

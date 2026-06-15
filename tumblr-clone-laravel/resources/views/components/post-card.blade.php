@@ -20,45 +20,47 @@
         </small>
     </div>
 
-    @if ($post->type === 'image' && $post->media_url)
-        <div class="post-card-media">
-            <img src="{{ asset('storage/' . $post->media_url) }}" alt="Post media">
-        </div>
-    @endif
-
-    @if ($post->title)
-        <a href="{{ route('posts.show', $post->id) }}" class="post-card-title-link">
-            <h2 class="post-card-title">{{ $post->title }}</h2>
-        </a>
-    @endif
-
-    @if ($post->type === 'quote')
-        <a href="{{ route('posts.show', $post->id) }}" class="post-card-quote-link">
-            <blockquote class="post-card-quote">
-                {{ nl2br(e($post->body)) }}
-            </blockquote>
-        </a>
-    @elseif ($post->type === 'link' && $post->media_url)
-        <a href="{{ $post->media_url }}" target="_blank" rel="noopener" class="post-card-link">
-            {{ $post->title ?: $post->media_url }}
-        </a>
-    @elseif ($post->body)
-        <a href="{{ route('posts.show', $post->id) }}" class="post-card-body-link">
-            <div class="post-card-body">
-                {{ nl2br(e($post->body)) }}
+    <div class="post-card-content">
+        @if ($post->type === 'image' && $post->media_url)
+            <div class="post-card-media">
+                <img src="{{ asset('storage/' . $post->media_url) }}" alt="Post media">
             </div>
-        </a>
-    @endif
+        @endif
 
-    @if ($post->relationLoaded('tags') && $post->tags->isNotEmpty())
-        <div class="post-card-tags">
-            @foreach ($post->tags as $tag)
-                <a href="{{ route('dashboard', ['tag' => $tag->slug]) }}" class="tag-link">
-                    #{{ $tag->name }}
-                </a>
-            @endforeach
-        </div>
-    @endif
+        @if ($post->title)
+            <a href="{{ route('posts.show', $post->id) }}" class="post-card-title-link">
+                <h2 class="post-card-title">{{ $post->title }}</h2>
+            </a>
+        @endif
+
+        @if ($post->type === 'quote')
+            <a href="{{ route('posts.show', $post->id) }}" class="post-card-quote-link">
+                <blockquote class="post-card-quote">
+                    {{ nl2br(e($post->body)) }}
+                </blockquote>
+            </a>
+        @elseif ($post->type === 'link' && $post->media_url)
+            <a href="{{ $post->media_url }}" target="_blank" rel="noopener" class="post-card-link">
+                {{ $post->title ?: $post->media_url }}
+            </a>
+        @elseif ($post->body)
+            <a href="{{ route('posts.show', $post->id) }}" class="post-card-body-link">
+                <div class="post-card-body">
+                    {{ nl2br(e($post->body)) }}
+                </div>
+            </a>
+        @endif
+
+        @if ($post->relationLoaded('tags') && $post->tags->isNotEmpty())
+            <div class="post-card-tags">
+                @foreach ($post->tags as $tag)
+                    <a href="{{ route('dashboard', ['tag' => $tag->slug]) }}" class="tag-link">
+                        #{{ $tag->name }}
+                    </a>
+                @endforeach
+            </div>
+        @endif
+    </div>
 
     <div class="post-card-actions">
         <button class="btn-like @if ($post->liked) liked @endif"
