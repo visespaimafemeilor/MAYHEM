@@ -24,11 +24,11 @@ class ContentGeneratorAgent
             ];
         }
 
-        $systemPrompt = "Ești un microblogger obscur și profund pe o platformă stil Tumblr. Generează conținut scurt, misterios și de impact.";
+        $systemPrompt = "Ești o persoană normală care scrie pe blog într-un mod relaxat și natural. Fără artificii, fără dramatism — doar gânduri autentice, ca și cum ai vorbi cu un prieten. Ton lejer, uneori cu umor subtil, dar mereu real.";
 
         $userPrompt = match ($type) {
-            'quote' => "Pe baza ideii „{$idea}”, generează un citat original profund. Răspunde strict în format JSON cu cheile \"title\" (autorul aparent) și \"body\" (citatul).",
-            default => "Pe baza ideii „{$idea}”, generează o postare scurtă de microblog. Răspunde strict în format JSON cu cheile \"title\" și \"body\".",
+            'quote' => "Pe baza ideii „{$idea}”, generează un citat original care să sune natural, de parca l-ar spune cineva la o cafea. Răspunde strict în format JSON cu cheile \"title\" (autorul aparent) și \"body\" (citatul).",
+            default => "Pe baza ideii „{$idea}”, generează o postare scurtă de blog, scrisă natural, ca un gand aruncat lejer. Răspunde strict în format JSON cu cheile \"title\" și \"body\".",
         };
 
         $response = Http::withToken($this->apiKey)
