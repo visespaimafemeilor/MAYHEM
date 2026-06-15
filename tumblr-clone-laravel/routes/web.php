@@ -45,4 +45,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/notifications/count', [NotificationController::class, 'unreadCount'])->name('notifications.count');
 });
 
+Route::get('/post/{post}', [PostController::class, 'show'])->name('posts.show');
+
 Route::get('/profile/{username}', [ProfileController::class, 'index'])->name('profile');

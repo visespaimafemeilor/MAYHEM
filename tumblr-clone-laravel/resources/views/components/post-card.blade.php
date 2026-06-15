@@ -27,21 +27,27 @@
     @endif
 
     @if ($post->title)
-        <h2 class="post-card-title">{{ $post->title }}</h2>
+        <a href="{{ route('posts.show', $post->id) }}" class="post-card-title-link">
+            <h2 class="post-card-title">{{ $post->title }}</h2>
+        </a>
     @endif
 
     @if ($post->type === 'quote')
-        <blockquote class="post-card-quote">
-            {{ nl2br(e($post->body)) }}
-        </blockquote>
+        <a href="{{ route('posts.show', $post->id) }}" class="post-card-quote-link">
+            <blockquote class="post-card-quote">
+                {{ nl2br(e($post->body)) }}
+            </blockquote>
+        </a>
     @elseif ($post->type === 'link' && $post->media_url)
         <a href="{{ $post->media_url }}" target="_blank" rel="noopener" class="post-card-link">
             {{ $post->title ?: $post->media_url }}
         </a>
     @elseif ($post->body)
-        <div class="post-card-body">
-            {{ nl2br(e($post->body)) }}
-        </div>
+        <a href="{{ route('posts.show', $post->id) }}" class="post-card-body-link">
+            <div class="post-card-body">
+                {{ nl2br(e($post->body)) }}
+            </div>
+        </a>
     @endif
 
     @if ($post->relationLoaded('tags') && $post->tags->isNotEmpty())

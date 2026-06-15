@@ -99,6 +99,18 @@ class PostController extends Controller
         return view('posts.edit', compact('post', 'tags', 'postTags'));
     }
 
+    public function show(Post $post)
+    {
+        if ($post->status !== 'published' && !auth()->user()?->belongsToUser($post->user_id)) {
+            abort(404);
+        }
+
+        $post->loadCount('likes')->load('user', 'tags', 'parentPost.user');
+        $post->liked = $post->likedByAuthUser();
+
+        return view('posts.show', compact('post'));
+    }
+
     public function delete(Request $request)
     {
         $post = Post::findOrFail((int) $request->query('id'));

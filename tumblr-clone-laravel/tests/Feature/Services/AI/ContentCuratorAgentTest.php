@@ -8,6 +8,13 @@ use Tests\TestCase;
 
 class ContentCuratorAgentTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        config()->set('services.groq.api_key', 'test-key');
+    }
+
     public function test_suggests_tags_on_successful_response(): void
     {
         Http::fake([
@@ -40,6 +47,8 @@ class ContentCuratorAgentTest extends TestCase
 
     public function test_returns_empty_array_when_missing_api_key(): void
     {
+        config()->set('services.groq.api_key', null);
+
         Http::fake();
 
         $agent = new ContentCuratorAgent(null);
