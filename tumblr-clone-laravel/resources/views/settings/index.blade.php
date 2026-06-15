@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="settings">
+    <a href="{{ route('dashboard') }}" class="back-link">Înapoi la Dashboard</a>
     <h1>Setări</h1>
 
     <section class="settings-section">

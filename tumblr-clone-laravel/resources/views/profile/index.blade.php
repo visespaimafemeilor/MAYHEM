@@ -12,6 +12,7 @@
 
 @section('content')
 <div class="profile">
+    <a href="{{ route('dashboard') }}" class="back-link">Înapoi la Dashboard</a>
     <div class="profile-header">
         <img src="{{ $profileUser->avatar }}"
              alt="avatar" class="avatar avatar--lg">

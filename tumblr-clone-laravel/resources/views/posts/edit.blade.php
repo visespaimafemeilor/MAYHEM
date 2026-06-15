@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="post-form">
+    <a href="{{ route('dashboard') }}" class="back-link">Înapoi la Dashboard</a>
     <h1>Editează postarea</h1>
 
     <form method="POST" action="{{ route('posts.edit', ['id' => $post->id]) }}" enctype="multipart/form-data">

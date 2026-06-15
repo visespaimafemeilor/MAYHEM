@@ -1,10 +1,22 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+    function glitchFlash() {
+        var flash = document.createElement('div');
+        flash.style.cssText = 'position:fixed;inset:0;z-index:99999;pointer-events:none;mix-blend-mode:difference;animation:glitchFlash 0.15s ease-out;';
+        flash.style.background = '#c93636';
+        flash.style.opacity = '0.15';
+        document.body.appendChild(flash);
+        setTimeout(function () { flash.remove(); }, 150);
+    }
+
     document.querySelectorAll('.btn-like').forEach(function (btn) {
         btn.addEventListener('click', function (e) {
             e.preventDefault();
             var postId = this.dataset.postId;
             var self   = this;
+
+            self.style.transform = 'scale(1.3)';
+            setTimeout(function () { self.style.transform = ''; }, 150);
 
             var xhr = new XMLHttpRequest();
             xhr.open('POST', BASE_URL + '/like', true);
@@ -17,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         var res = JSON.parse(xhr.responseText);
                         self.classList.toggle('liked', res.liked);
                         self.querySelector('.like-count').textContent = res.count;
+                        if (res.liked) { glitchFlash(); }
                     } catch (err) {
                         console.error('Invalid JSON response');
                     }

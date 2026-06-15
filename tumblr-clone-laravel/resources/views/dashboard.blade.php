@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="dashboard">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
-        <h1 class="page-title" style="margin-bottom:0;">
+    <div class="filter-header">
+        <h1 class="page-title">
             @if (request('q'))
                 Rezultate pentru „{{ e(request('q')) }}”
             @elseif (request('tag'))
@@ -15,27 +15,26 @@
             @endif
         </h1>
 
-        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <div class="filter-bar">
             <a href="{{ route('dashboard', ['type' => null, 'tag' => null, 'q' => null]) }}"
-               class="btn btn-sm @if(!request('type') && !request('tag') && !request('q')) btn-primary @endif">Toate</a>
+               class="filter-btn @if(!request('type') && !request('tag') && !request('q')) filter-active @endif">Toate</a>
             <a href="{{ route('dashboard', ['type' => 'text']) }}"
-               class="btn btn-sm @if(request('type') === 'text') btn-primary @endif">Text</a>
+               class="filter-btn @if(request('type') === 'text') filter-active @endif">Text</a>
             <a href="{{ route('dashboard', ['type' => 'image']) }}"
-               class="btn btn-sm @if(request('type') === 'image') btn-primary @endif">Imagine</a>
+               class="filter-btn @if(request('type') === 'image') filter-active @endif">Imagine</a>
             <a href="{{ route('dashboard', ['type' => 'quote']) }}"
-               class="btn btn-sm @if(request('type') === 'quote') btn-primary @endif">Citat</a>
+               class="filter-btn @if(request('type') === 'quote') filter-active @endif">Citat</a>
             <a href="{{ route('dashboard', ['type' => 'link']) }}"
-               class="btn btn-sm @if(request('type') === 'link') btn-primary @endif">Link</a>
+               class="filter-btn @if(request('type') === 'link') filter-active @endif">Link</a>
         </div>
     </div>
 
     @if (isset($tags) && $tags->isNotEmpty())
-        <div style="margin-bottom:20px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
-            <span style="font-size:0.8rem;color:var(--text-muted);margin-right:4px;">Tag-uri:</span>
+        <div class="tag-bar">
+            <span class="tag-bar-label">Tag-uri:</span>
             @foreach ($tags as $tag)
                 <a href="{{ route('dashboard', ['tag' => $tag->slug]) }}"
-                   style="font-size:0.8rem;color:var(--accent);background:rgba(138,108,245,0.08);padding:2px 12px;border-radius:999px;text-decoration:none;border:1px solid transparent;transition:all 0.2s;"
-                   @if(request('tag') === $tag->slug) style="font-size:0.8rem;color:#fff;background:var(--accent);padding:2px 12px;border-radius:999px;text-decoration:none;" @endif>
+                   class="tag-link @if(request('tag') === $tag->slug) tag-link-active @endif">
                     #{{ $tag->name }}
                 </a>
             @endforeach
@@ -59,7 +58,7 @@
         @endforelse
     </div>
 
-    <div style="margin-top:32px;">
+    <div class="pagination-wrap">
         {{ $posts->links() }}
     </div>
 </div>

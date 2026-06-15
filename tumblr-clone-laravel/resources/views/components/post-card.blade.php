@@ -4,7 +4,7 @@
         <div class="post-card-reblog-header">
             &#128257; a distribuit de la
             <a href="{{ route('profile', $post->parentPost->user->username) }}">
-                @<span style="font-weight:600;">{{ $post->parentPost->user->username }}</span>
+                @<span>{{ $post->parentPost->user->username }}</span>
             </a>
         </div>
     @endif
@@ -45,10 +45,9 @@
     @endif
 
     @if ($post->relationLoaded('tags') && $post->tags->isNotEmpty())
-        <div class="post-card-tags" style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap;">
+        <div class="post-card-tags">
             @foreach ($post->tags as $tag)
-                <a href="{{ route('dashboard', ['tag' => $tag->slug]) }}"
-                   style="font-size:0.75rem;color:var(--accent);background:rgba(138,108,245,0.1);padding:2px 10px;border-radius:999px;text-decoration:none;">
+                <a href="{{ route('dashboard', ['tag' => $tag->slug]) }}" class="tag-link">
                     #{{ $tag->name }}
                 </a>
             @endforeach

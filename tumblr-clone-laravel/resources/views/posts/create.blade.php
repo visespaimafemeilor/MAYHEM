@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="post-form">
+    <a href="{{ route('dashboard') }}" class="back-link">Înapoi la Dashboard</a>
     <h1>Postare nouă</h1>
 
     <form method="POST" action="{{ route('posts.create') }}" enctype="multipart/form-data">

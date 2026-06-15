@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="notifications-page">
+    <a href="{{ route('dashboard') }}" class="back-link">Înapoi la Dashboard</a>
     <h1 class="page-title">Notificări</h1>
 
     @forelse ($notifications as $notification)
@@ -30,7 +31,7 @@
         </div>
     @endforelse
 
-    <div style="margin-top:32px;">
+    <div class="pagination-wrap">
         {{ $notifications->links() }}
     </div>
 </div>
