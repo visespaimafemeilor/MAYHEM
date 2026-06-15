@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostSaved;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\Tag;
@@ -41,6 +42,8 @@ class PostController extends Controller
                 $tagIds = $this->syncTags($data['tags']);
                 $post->tags()->sync($tagIds);
             }
+
+            event(new PostSaved($post));
 
             return redirect()->route('dashboard');
         }
@@ -85,6 +88,8 @@ class PostController extends Controller
                 $tagIds = $this->syncTags($data['tags']);
                 $post->tags()->sync($tagIds);
             }
+
+            event(new PostSaved($post));
 
             return redirect()->route('profile', auth()->user()->username);
         }
