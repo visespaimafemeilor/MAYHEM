@@ -7,6 +7,7 @@ use App\Helpers\ImageOptimizer;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Notifications\PostCommented;
 use App\Notifications\PostLiked;
 use App\Notifications\PostReblogged;
 use Illuminate\Http\Request;
@@ -118,10 +119,36 @@ class PostController extends Controller
             abort(404);
         }
 
-        $post->loadCount('likes')->load('user', 'tags', 'parentPost.user');
+        $post->loadCount('likes')->load('user', 'tags', 'parentPost.user', 'comments.user');
         $post->liked = $post->likedByAuthUser();
 
         return view('posts.show', compact('post'));
+    }
+
+    public function comment(Request $request)
+    {
+        $data = $request->validate([
+            'post_id' => 'required|exists:posts,id',
+            'body'    => 'required|string|max:1000',
+        ]);
+
+        $post = Post::findOrFail((int) $data['post_id']);
+
+        if ($post->status !== 'published') {
+            return redirect()->back()->with('error', 'Postarea nu acceptă comentarii.');
+        }
+
+        $comment = auth()->user()->comments()->create([
+            'post_id' => $post->id,
+            'body'    => $data['body'],
+        ]);
+
+        if ($post->user_id !== auth()->id()) {
+            $post->user->notify(new PostCommented($post, auth()->user(), $comment));
+        }
+
+        return redirect()->route('posts.show', $post->id)
+            ->withFragment('comments');
     }
 
     public function delete(Request $request)
@@ -150,6 +177,16 @@ class PostController extends Controller
         }
 
         return response()->json($result);
+    }
+
+    public function reblogForm(Post $post)
+    {
+        if ($post->status !== 'published') {
+            return redirect()->route('dashboard')->with('error', 'Postarea nu mai este disponibilă.');
+        }
+
+        $post->load('user', 'tags');
+        return view('posts.reblog', compact('post'));
     }
 
     public function reblog(Request $request)

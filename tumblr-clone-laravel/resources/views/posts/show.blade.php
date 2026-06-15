@@ -70,10 +70,9 @@
             </button>
 
             @auth
-                <button class="btn btn-sm btn-reblog"
-                        onclick="openReblogModal('{{ $post->id }}', '{{ $post->user->username }}', {{ json_encode($post->body) }})">
+                <a href="{{ route('posts.reblog.form', $post->id) }}" class="btn btn-sm btn-reblog">
                     &#128257; Reblog
-                </button>
+                </a>
 
                 @if (Auth::user()->id === $post->user_id)
                     <a href="{{ route('posts.edit', ['id' => $post->id]) }}" class="btn btn-sm">Edit</a>
@@ -84,18 +83,35 @@
             @endauth
         </div>
 
-        @auth
-            <div class="post-detail-reblog-form">
-                <hr>
-                <h3>Distribuie</h3>
-                <form action="{{ route('posts.reblog') }}" method="POST">
+        <div class="post-detail-comments" id="comments">
+            @if ($post->comments->isNotEmpty())
+                <h3>Comentarii</h3>
+                <div class="comments-list">
+                    @foreach ($post->comments as $comment)
+                        <div class="comment-item">
+                            <div class="comment-header">
+                                <a href="{{ route('profile', $comment->user->username) }}" class="comment-author">
+                                    <img src="{{ $comment->user->avatar }}" alt="avatar" class="avatar avatar--sm">
+                                    <span>{{ $comment->user->username }}</span>
+                                </a>
+                                <small class="comment-date">{{ $comment->created_at->diffForHumans() }}</small>
+                            </div>
+                            <div class="comment-body">{{ nl2br(e($comment->body)) }}</div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
+            @auth
+                <form action="{{ route('comment') }}" method="POST" class="comment-form">
                     @csrf
-                    <input type="hidden" name="parent_post_id" value="{{ $post->id }}">
-                    <textarea name="comment" placeholder="Adaugă un comentariu..." rows="2"></textarea>
-                    <button type="submit" class="btn btn-sm">Reblog</button>
+                    <input type="hidden" name="post_id" value="{{ $post->id }}">
+                    <textarea name="body" placeholder="Scrie un comentariu..." rows="2" required></textarea>
+                    <button type="submit" class="btn btn-sm">Comentează</button>
                 </form>
-            </div>
-        @endauth
+            @endauth
+        </div>
+
     </article>
 
     <a href="{{ url()->previous() }}" class="btn btn-back">&#8592; Înapoi</a>

@@ -36,6 +36,11 @@ class Post extends Model
         return $this->hasMany(self::class, 'parent_post_id');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function isReblog(): bool
     {
         return $this->parent_post_id !== null;

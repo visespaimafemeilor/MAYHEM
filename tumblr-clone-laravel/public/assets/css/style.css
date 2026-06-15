@@ -1361,14 +1361,102 @@ main {
     border-top: 1px solid var(--border);
 }
 
-.post-card--detail.post-card--image .post-detail-reblog-form {
-    padding: 0 16px 16px;
-}
+
 
 .btn-back {
     display: inline-block;
     margin-top: 20px;
     margin-bottom: 40px;
+}
+
+.reblog-preview-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 20px;
+    margin-bottom: 24px;
+    box-shadow: 3px 3px 0px rgba(201, 54, 54, 0.1);
+}
+
+/* ===== COMMENTS ===== */
+.post-detail-comments {
+    padding: 0 16px 16px;
+}
+
+.post-detail-comments h3 {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.comment-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    padding: 12px 14px;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.comment-author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.comment-author:hover {
+    color: var(--accent);
+}
+
+.comment-date {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.comment-body {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    resize: vertical;
+    min-height: 50px;
+    margin-bottom: 8px;
+    border-radius: 0;
+}
+
+.comment-form textarea:focus {
+    outline: none;
+    border-color: var(--accent-burgundy);
+    box-shadow: 2px 2px 0px rgba(138, 48, 80, 0.1);
 }
 
 /* ===== RESPONSIVE ===== */

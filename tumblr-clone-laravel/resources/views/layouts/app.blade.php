@@ -33,10 +33,6 @@
 
     @include('components.footer')
 
-    @auth
-        @include('components.reblog-modal')
-    @endauth
-
     <script>var BASE_URL = '{{ url('/') }}';</script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
     @stack('scripts')

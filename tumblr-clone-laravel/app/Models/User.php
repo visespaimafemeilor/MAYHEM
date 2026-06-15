@@ -39,6 +39,11 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function isFollowing(User $user): bool
     {
         return $this->following()->where('followed_id', $user->id)->exists();

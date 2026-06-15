@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/edit', [PostController::class, 'edit']);
     Route::get('/delete', [PostController::class, 'delete'])->name('posts.delete');
 
+    Route::get('/reblog/{post}', [PostController::class, 'reblogForm'])->name('posts.reblog.form');
     Route::post('/reblog', [PostController::class, 'reblog'])->name('posts.reblog');
 
     Route::post('/follow', [ProfileController::class, 'follow'])->name('follow');
@@ -37,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/settings/password', [SettingsController::class, 'updatePassword'])->name('settings.password');
 
     Route::post('/like', [PostController::class, 'like'])->name('like');
+    Route::post('/comment', [PostController::class, 'comment'])->name('comment');
 
     Route::post('/ai/generate', [AIController::class, 'generate'])->name('ai.generate');
 

@@ -13,6 +13,7 @@
                     @case('like') &#9829; @break
                     @case('follow') &#10149; @break
                     @case('reblog') &#128257; @break
+                    @case('comment') &#128172; @break
                     @default &#9672;
                 @endswitch
             </div>

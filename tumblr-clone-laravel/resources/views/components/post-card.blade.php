@@ -71,10 +71,9 @@
         </button>
 
         @auth
-            <button class="btn btn-sm btn-reblog"
-                    onclick="openReblogModal('{{ $post->id }}', '{{ $post->user->username }}', {{ json_encode($post->body) }})">
+            <a href="{{ route('posts.reblog.form', $post->id) }}" class="btn btn-sm btn-reblog">
                 &#128257; Reblog
-            </button>
+            </a>
 
             @if (Auth::user()->id === $post->user_id)
                 <a href="{{ route('posts.edit', ['id' => $post->id]) }}" class="btn btn-sm">Edit</a>
