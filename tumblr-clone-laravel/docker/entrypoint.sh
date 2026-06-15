@@ -1,9 +1,12 @@
 #!/bin/sh
 
-if [ ! -d /var/www/vendor ]; then
-    composer install --no-interaction --optimize-autoloader
+cd /var/www
+
+if [ ! -f .env ]; then
+    cp .env.example.docker .env
 fi
 
-php artisan storage:link --force 2>/dev/null || true
+php artisan key:generate --force --quiet 2>/dev/null || true
+php artisan storage:link --force --quiet 2>/dev/null || true
 
-php-fpm
+exec php-fpm
