@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\PostSaved;
+use App\Helpers\ImageOptimizer;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\Tag;
@@ -16,18 +17,22 @@ class PostController extends Controller
     {
         if ($request->isMethod('post')) {
             $data = $request->validate([
-                'type'  => 'required|in:text,image,quote,link',
-                'title' => 'nullable|string|max:255',
-                'body'  => 'nullable|string',
-                'media' => 'nullable|image|max:2048',
-                'tags'  => 'nullable|string',
-                'status' => 'sometimes|in:draft,published',
+                'type'      => 'required|in:text,image,quote,link',
+                'title'     => 'nullable|string|max:255',
+                'body'      => 'nullable|string',
+                'media'     => 'nullable|image|max:10240',
+                'media_url' => 'nullable|url|max:2048',
+                'tags'      => 'nullable|string',
+                'status'    => 'sometimes|in:draft,published',
             ]);
 
             $mediaUrl = null;
 
-            if (in_array($data['type'], ['image', 'link']) && $request->hasFile('media')) {
-                $mediaUrl = $request->file('media')->store('uploads', 'public');
+            if ($data['type'] === 'image' && $request->hasFile('media')) {
+                $file = ImageOptimizer::optimize($request->file('media'));
+                $mediaUrl = $file->store('uploads', 'public');
+            } elseif ($data['type'] === 'link' && !empty($data['media_url'])) {
+                $mediaUrl = $data['media_url'];
             }
 
             $post = auth()->user()->posts()->create([
@@ -62,18 +67,26 @@ class PostController extends Controller
 
         if ($request->isMethod('post')) {
             $data = $request->validate([
-                'type'  => 'required|in:text,image,quote,link',
-                'title' => 'nullable|string|max:255',
-                'body'  => 'nullable|string',
-                'media' => 'nullable|image|max:2048',
-                'tags'  => 'nullable|string',
-                'status' => 'sometimes|in:draft,published',
+                'type'      => 'required|in:text,image,quote,link',
+                'title'     => 'nullable|string|max:255',
+                'body'      => 'nullable|string',
+                'media'     => 'nullable|image|max:10240',
+                'media_url' => 'nullable|url|max:2048',
+                'tags'      => 'nullable|string',
+                'status'    => 'sometimes|in:draft,published',
             ]);
 
             $mediaUrl = $post->media_url;
 
-            if ($request->hasFile('media')) {
-                $mediaUrl = $request->file('media')->store('uploads', 'public');
+            if ($data['type'] === 'image') {
+                if ($request->hasFile('media')) {
+                    $file = ImageOptimizer::optimize($request->file('media'));
+                    $mediaUrl = $file->store('uploads', 'public');
+                }
+            } elseif ($data['type'] === 'link') {
+                $mediaUrl = $data['media_url'] ?? $post->media_url;
+            } else {
+                $mediaUrl = null;
             }
 
             $post->update([

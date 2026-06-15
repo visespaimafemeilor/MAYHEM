@@ -9,22 +9,24 @@
         </div>
     @endif
 
-    <div class="post-card-header">
-        <a href="{{ route('profile', $post->user->username) }}" class="post-card-author">
-            <img src="{{ $post->user->avatar }}"
-                 alt="avatar" class="avatar avatar--sm">
-            <span>{{ $post->user->username }}</span>
-        </a>
-        <small class="post-card-date">
-            {{ $post->created_at->format('d M Y, H:i') }}
-        </small>
-    </div>
-
     <div class="post-card-content">
+
+        <div class="post-card-header">
+            <a href="{{ route('profile', $post->user->username) }}" class="post-card-author">
+                <img src="{{ $post->user->avatar }}"
+                     alt="avatar" class="avatar avatar--sm">
+                <span>{{ $post->user->username }}</span>
+            </a>
+            <small class="post-card-date">
+                {{ $post->created_at->format('d M Y, H:i') }}
+            </small>
+        </div>
         @if ($post->type === 'image' && $post->media_url)
-            <div class="post-card-media">
-                <img src="{{ asset('storage/' . $post->media_url) }}" alt="Post media">
-            </div>
+            <a href="{{ route('posts.show', $post->id) }}" class="post-card-media-link">
+                <div class="post-card-media">
+                    <img src="{{ asset('storage/' . $post->media_url) }}" alt="Post media">
+                </div>
+            </a>
         @endif
 
         @if ($post->title)
